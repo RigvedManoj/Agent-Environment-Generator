@@ -1,3 +1,5 @@
+import numpy
+
 from State import State
 
 
@@ -36,3 +38,18 @@ def setStates():
     s = [s1, s2, s3, s4, s5, s6, s7]
 
     return s
+
+
+def generateRandomPolicy(state):
+    if state.actionCount == 0:
+        return state
+    currentState: State = state
+    random = numpy.random.choice(state.actionCount)
+    actions = []
+    for i in range(0, state.actionCount):
+        if i == random:
+            actions.append(1)
+        else:
+            actions.append(0)
+    state.setPolicies(actions)
+    return state
