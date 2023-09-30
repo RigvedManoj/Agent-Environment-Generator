@@ -3,19 +3,20 @@ from matplotlib import pyplot as plt
 
 from Environment import setStates, generateRandomPolicy
 from Episode import runEpisode
-from Functions import calculateExpectedReturns, calculateVariance
+from Functions import calculateExpectedReturns
 
 s = setStates()
 
 expectedOptimalValues = []
 for n in range(1, 250, 10):
     bestExpectedValue = 0
-    bestPolicy = []
     for k in range(0, n):
+        expectedValue = 0
+        # Assign Random Policy to each state
         for i in range(0, len(s)):
             state = generateRandomPolicy(s[i])
             s[i] = state
-        expectedValue = 0
+        # Run 100 episodes for each random policy
         for i in range(0, 100):
             totalReward = runEpisode(s, 0.9)
             if i == 0:
@@ -24,11 +25,6 @@ for n in range(1, 250, 10):
                 expectedValue = calculateExpectedReturns(expectedValue, i + 1, totalReward)
         if expectedValue > bestExpectedValue:
             bestExpectedValue = expectedValue
-            policy = []
-            for state in s:
-                if state.actionCount != 0:
-                    policy.append(state.policies)
-            bestPolicy = policy
     expectedOptimalValues.append(bestExpectedValue)
 
 x_axis = numpy.arange(1, 250, 10)

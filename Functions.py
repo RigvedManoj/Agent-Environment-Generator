@@ -1,8 +1,10 @@
+# Returns new average given old average and new value.
 def calculateExpectedReturns(initialExpectedValue, size, newValue):
     newExpectedValue = ((size - 1) * initialExpectedValue + newValue) / size
     return newExpectedValue
 
 
+# Returns variance given list of values and average value.
 def calculateVariance(rewardList, averageReward):
     if len(rewardList) <= 1:
         return 0

@@ -7,7 +7,7 @@ from Functions import calculateExpectedReturns, calculateVariance
 
 s = setStates()
 
-for gamma in [0.25, 0.5, 0.75, 0.99]:
+for gamma in [0.9, 0.25, 0.5, 0.75, 0.99]:
     rewardList = []
     expectedValues = []
     for i in range(0, 150000):

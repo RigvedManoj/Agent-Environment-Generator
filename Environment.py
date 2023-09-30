@@ -3,13 +3,15 @@ import numpy
 from State import State
 
 
+# Set all states by defining policies, transitions and rewards.
 def setStates():
-    # Here 0.5 is probability of taking action A(1) and A(2)
-    # Here 0 is probability of going to state S(1) given S(1) and A(1)
+    # Here [0.5, 0.5] is probability of taking action A(1) and A(2)
+    # Here [0, 0, 0, 1, 0, 0, 0] is probability of going to state S(1) to S(7) given S(1) and A(1)
     s1 = State(1, 2)
     s1.setPolicies([0.5, 0.5])
     s1.setTransition([1, 2], [[0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0]])
     s1.setReward([1, 2], [7, 10])
+
     s2 = State(2, 2)
     s2.setPolicies([0.7, 0.3])
     s2.setTransition([1, 2], [[0, 0, 0, 0.8, 0.2, 0, 0], [0, 0, 0, 0.6, 0.4, 0, 0]])
@@ -30,16 +32,16 @@ def setStates():
     s5.setTransition([1, 2], [[0, 0, 0, 0, 0, 0.3, 0.7], [0, 0, 0, 0, 0, 0, 1]])
     s5.setReward([1, 2], [-8, 2])
 
+    # Defining EndState to have no actions
     s6 = State(6, 0)
-
     s7 = State(7, 0)
 
     # List of states
     s = [s1, s2, s3, s4, s5, s6, s7]
-
     return s
 
 
+# Generates a random policy by assigning equal probability to all actions.
 def generateRandomPolicy(state):
     if state.actionCount == 0:
         return state
@@ -53,3 +55,9 @@ def generateRandomPolicy(state):
             actions.append(0)
     state.setPolicies(actions)
     return state
+
+
+# Returns Initial State depending on d_0 probabilities
+def setInitialState(s):
+    initialState = numpy.random.choice(numpy.arange(0, len(s)), p=[0.6, 0.3, 0.1, 0, 0, 0, 0])
+    return s[initialState]

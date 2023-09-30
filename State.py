@@ -15,10 +15,12 @@ class State:
         for action in actions:
             self.transition[action - 1] = stateProbLists[action - 1]
 
+    # Setting reward for given state and action.
     def setReward(self, actions, rewards):
         for action in actions:
             self.reward[action - 1] = rewards[action - 1]
 
+    # Checking EndState by checking number of Actions.
     def checkEndState(self):
         if self.actionCount == 0:
             return True
