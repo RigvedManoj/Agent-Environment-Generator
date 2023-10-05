@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 
 from Environment import setStates
 from Episode import runEpisode
-from Functions import calculateExpectedReturns, drawGraph
+from Functions import calculateExpectedReturns, drawGraph, drawPolicyGraph
 
 
 def run(s, gamma, episodeCount):
@@ -21,5 +21,6 @@ def run(s, gamma, episodeCount):
 
 
 states = setStates(7, 1, 3, 15, 35)
-run(states, 1, 10000)
+run(states, 1, 20)
 drawGraph(states)
+drawPolicyGraph(states)

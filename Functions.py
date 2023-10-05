@@ -25,10 +25,26 @@ def drawGraph(s):
         G.add_node(state.state)
     for state in s:
         for i in range(0, state.actionCount):
-            G.add_edge(state.state, state.transition[i].index(1), weight= state.reward[i])
+            G.add_edge(state.state, state.transition[i].index(1), weight=state.reward[i])
     pos = nx.circular_layout(G)
     nx.draw_networkx(G, pos)
     labels = nx.get_edge_attributes(G, 'weight')
     nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
     plt.savefig("environment.png")
+    plt.clf()
+
+
+def drawPolicyGraph(s):
+    G = nx.DiGraph()
+    for state in s:
+        G.add_node(state.state)
+    for state in s:
+        if state.actionCount != 0:
+            i = state.policies.index(1)
+            G.add_edge(state.state, state.transition[i].index(1), weight=state.reward[i])
+    pos = nx.circular_layout(G)
+    nx.draw_networkx(G, pos)
+    labels = nx.get_edge_attributes(G, 'weight')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+    plt.savefig("policy.png")
     plt.clf()
