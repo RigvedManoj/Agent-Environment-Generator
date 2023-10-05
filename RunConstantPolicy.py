@@ -1,11 +1,11 @@
 import numpy
 from matplotlib import pyplot as plt
 
-from Environment import setStates
+from Environment import setStaticStates
 from Episode import runEpisode
 from Functions import calculateExpectedReturns, calculateVariance
 
-s = setStates()
+s = setStaticStates()
 
 for gamma in [0.9, 0.25, 0.5, 0.75, 0.99]:
     rewardList = []

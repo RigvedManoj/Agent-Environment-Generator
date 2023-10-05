@@ -1,11 +1,11 @@
 import numpy
 from matplotlib import pyplot as plt
 
-from Environment import setStates, generateRandomPolicy
+from Environment import generateRandomPolicy, setStaticStates
 from Episode import runEpisode
 from Functions import calculateExpectedReturns
 
-s = setStates()
+s = setStaticStates()
 
 expectedOptimalValues = []
 for n in range(1, 250, 10):

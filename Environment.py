@@ -4,7 +4,7 @@ from State import State
 
 
 # Set all states by defining policies, transitions and rewards.
-def setStates():
+def setStaticStates():
     # Here [0.5, 0.5] is probability of taking action A(1) and A(2)
     # Here [0, 0, 0, 1, 0, 0, 0] is probability of going to state S(1) to S(7) given S(1) and A(1)
     s1 = State(1, 2)
@@ -41,6 +41,20 @@ def setStates():
     return s
 
 
+def setStates(numberOfStates, numberOfEndStates, actionCount, minReward, maxReward):
+    s = []
+    for i in range(0, numberOfStates - numberOfEndStates):
+        state = State(i, actionCount)
+        state = generateRandomPolicy(state)
+        state = generateDeterministicTransition(state, numberOfStates)
+        state = generateRandomReward(state, minReward, maxReward)
+        s.append(state)
+    for i in range(0, numberOfEndStates):
+        state = State(numberOfStates - numberOfEndStates + i, 0)
+        s.append(state)
+    return s
+
+
 # Generates a random policy by assigning equal probability to all actions.
 def generateRandomPolicy(state):
     if state.actionCount == 0:
@@ -57,7 +71,40 @@ def generateRandomPolicy(state):
     return state
 
 
+# Generate a random transition function.
+def generateDeterministicTransition(state, numberOfStates):
+    if state.actionCount == 0:
+        return state
+    transitionList = []
+    actionList = []
+    for i in range(0, state.actionCount):
+        tempList = []
+        random = numpy.random.choice(numberOfStates - state.state - 1) + state.state + 1
+        for j in range(0, numberOfStates):
+            if j == random:
+                tempList.append(1)
+            else:
+                tempList.append(0)
+        transitionList.append(tempList)
+        actionList.append(i + 1)
+    state.setTransition(actionList, transitionList)
+    return state
+
+
+def generateRandomReward(state, minReward, maxReward):
+    if state.actionCount == 0:
+        return state
+    rewardList = []
+    actionList = []
+    for i in range(0, state.actionCount):
+        reward = numpy.random.random_integers(minReward, maxReward)
+        rewardList.append(reward)
+        actionList.append(i)
+    state.setReward(actionList, rewardList)
+    return state
+
+
 # Returns Initial State depending on d_0 probabilities
 def setInitialState(s):
-    initialState = numpy.random.choice(numpy.arange(0, len(s)), p=[0.6, 0.3, 0.1, 0, 0, 0, 0])
+    initialState = numpy.random.choice(numpy.arange(0, 7), p=[0.6, 0.3, 0.1, 0, 0, 0, 0])
     return s[initialState]
