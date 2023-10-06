@@ -1,11 +1,12 @@
 import numpy
 from matplotlib import pyplot as plt
 
-from Environment import generateRandomPolicy, setStaticStates
+from Environment import generateRandomPolicy, setStaticStates, setInitialState
 from Episode import runEpisode
 from Functions import calculateExpectedReturns
 
 s = setStaticStates()
+p = [0.6, 0.3, 0.1, 0, 0, 0, 0]
 
 expectedOptimalValues = []
 for n in range(1, 250, 10):
@@ -18,7 +19,8 @@ for n in range(1, 250, 10):
             s[i] = state
         # Run 100 episodes for each random policy
         for i in range(0, 100):
-            totalReward = runEpisode(s, 0.9)
+            initialState = setInitialState(s, p)
+            totalReward = runEpisode(s, 0.9, initialState)
             if i == 0:
                 expectedValue = calculateExpectedReturns(0, 1, totalReward)
             else:

@@ -5,11 +5,9 @@ from State import State
 
 
 # Run 1 episode given set of states and gamma.
-def runEpisode(s, gamma, initialState=-1):
+def runEpisode(s, gamma, initialState):
     totalReward = 0
-    currentState: State = s[initialState]
-    if initialState == -1:
-        currentState: State = setInitialState(s)
+    currentState: State = initialState
     time = 0
     while not currentState.checkEndState():
         action = numpy.random.choice(numpy.arange(0, len(currentState.policies)), p=currentState.policies)

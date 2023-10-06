@@ -105,6 +105,6 @@ def generateRandomReward(state, minReward, maxReward):
 
 
 # Returns Initial State depending on d_0 probabilities
-def setInitialState(s):
-    initialState = numpy.random.choice(numpy.arange(0, 7), p=[0.6, 0.3, 0.1, 0, 0, 0, 0])
+def setInitialState(s,p):
+    initialState = numpy.random.choice(numpy.arange(len(s)), p=p)
     return s[initialState]
